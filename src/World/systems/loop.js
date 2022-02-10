@@ -1,5 +1,7 @@
 const { Clock } = THREE;
 
+const clock = new Clock();
+let secCounter = 0;
 class Loop {
   constructor(camera, scene, renderer) {
     this.camera = camera;
@@ -10,9 +12,10 @@ class Loop {
 
   start() {
     this.renderer.setAnimationLoop(() => {
+      const delta = clock.getDelta();
       // render a frame
       this.renderer.render(this.scene, this.camera);
-      this.tick();
+      this.tick(delta, secCounter);
     });
   }
 
@@ -20,9 +23,11 @@ class Loop {
     this.renderer.setAnimationLoop(null);
   }
 
-  tick() {
+  tick(delta) {
+    if (secCounter > 6) secCounter = 0;
+    secCounter += delta;
     for (const object of this.updatables) {
-      object.tick();
+      object.tick(delta, secCounter);
     }
   }
 }

@@ -23,7 +23,7 @@ class World {
 
     container.append(renderer.domElement);
 
-    const cube = createCube();
+    const cube = createCube(360);
     const [Alight, Dlight] = createLights();
 
     loop.updatables.push(cube);
